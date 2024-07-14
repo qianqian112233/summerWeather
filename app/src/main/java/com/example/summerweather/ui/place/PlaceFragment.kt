@@ -15,6 +15,7 @@ import com.example.summerweather.MainActivity
 import com.example.summerweather.R
 import com.example.summerweather.databinding.ActivityMainBinding
 import com.example.summerweather.databinding.FragmentPlaceBinding
+import com.example.summerweather.ui.weather.WeatherActivity
 
 class PlaceFragment : Fragment() {
     val viewModel by lazy {
@@ -48,6 +49,17 @@ class PlaceFragment : Fragment() {
 //            activity?.finish()
 //            return
 //        }
+        if(viewModel.isPlaceSaved()){
+            val place = viewModel.getSavedPlace()
+            val intent = Intent(context, WeatherActivity::class.java).apply {
+                putExtra("location_lng", place.location.lng)
+                putExtra("location_lat", place.location.lat)
+                putExtra("place_name", place.name)
+            }
+            startActivity(intent)
+            activity?.finish()
+            return
+        }
         val layoutManager = LinearLayoutManager(activity)
         binding.recyclerView.layoutManager = layoutManager
         adapter = PlaceAdapter(this, viewModel.placeList)

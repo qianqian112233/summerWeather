@@ -36,4 +36,10 @@ object SummerWeatherNetwork {
             })
         }
     }
+
+    private val weatherService = ServiceCreator.create(WeatherService::class.java)
+    suspend fun getFutureWeather(lng: String, lat: String) =
+        weatherService.getFutureWeather(lng, lat).await()
+    suspend fun getRealtimeWeather(lng: String, lat: String) =
+        weatherService.getRealtimeWeather(lng, lat).await()
 }

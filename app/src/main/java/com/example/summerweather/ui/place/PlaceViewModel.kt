@@ -41,11 +41,11 @@ class PlaceViewModel : ViewModel() {
     }
 
 
-//    fun savePlace(place: Place) = Repository.savePlace(place)
-//
-//    fun getSavedPlace() = Repository.getSavedPlaces()
-//
-//    fun isPlaceSaved() = Repository.isPlaceSaved()
+    fun savePlace(place: Place) = Repository.savePlace(place)
+
+    fun getSavedPlace() = Repository.getSavedPlace()
+
+    fun isPlaceSaved() = Repository.isPlaceSaved()
 
 //    private val _placeLiveData = MediatorLiveData<Result<List<Place>>>()
 //    val placeLiveData: LiveData<Result<List<Place>>> get() = _placeLiveData
