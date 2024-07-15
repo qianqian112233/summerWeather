@@ -38,18 +38,12 @@ class PlaceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        if (activity is MainActivity && viewModel.isPlaceSaved()) {
-//            val place = viewModel.getSavedPlace()
-//            val intent = Intent(context, WeatherActivity::class.java).apply {
-//                putExtra("location_lng", place.location.lng)
-//                putExtra("location_lat", place.location.lat)
-//                putExtra("place_name", place.name)
-//            }
-//            startActivity(intent)
-//            activity?.finish()
-//            return
-//        }
-        if(viewModel.isPlaceSaved()){
+        /*
+        只有当PlaceFragment被嵌入MainActivity中，
+        并且之前已经存在选中的城市，
+        此时才会直接跳转到WeatherActivity
+         */
+        if (activity is MainActivity && viewModel.isPlaceSaved()) {
             val place = viewModel.getSavedPlace()
             val intent = Intent(context, WeatherActivity::class.java).apply {
                 putExtra("location_lng", place.location.lng)
@@ -60,6 +54,17 @@ class PlaceFragment : Fragment() {
             activity?.finish()
             return
         }
+//        if(viewModel.isPlaceSaved()){
+//            val place = viewModel.getSavedPlace()
+//            val intent = Intent(context, WeatherActivity::class.java).apply {
+//                putExtra("location_lng", place.location.lng)
+//                putExtra("location_lat", place.location.lat)
+//                putExtra("place_name", place.name)
+//            }
+//            startActivity(intent)
+//            activity?.finish()
+//            return
+//        }
         val layoutManager = LinearLayoutManager(activity)
         binding.recyclerView.layoutManager = layoutManager
         adapter = PlaceAdapter(this, viewModel.placeList)
@@ -92,20 +97,4 @@ class PlaceFragment : Fragment() {
         })
 
     }
-
-    //这一部分代码逻辑已经调整到onViewCreated中，之后如果出现调用需要格外注意
-
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//        super.onActivityCreated(savedInstanceState)
-//        val layoutManager = LinearLayoutManager(activity)
-//        recyclerView.layoutManager = layoutManager
-//        adapter = PlaceAdapter(this, viewModel.placeList)
-//        recyclerView.adapter = adapter
-//        searchPlaceEdit.addTe
-//
-//
-//
-//    }
-
-
 }

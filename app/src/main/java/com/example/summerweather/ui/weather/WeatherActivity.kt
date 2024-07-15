@@ -1,16 +1,21 @@
 package com.example.summerweather.ui.weather
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.summerweather.R
@@ -26,7 +31,7 @@ import java.util.Locale
 
 class WeatherActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityWeatherBinding
+    lateinit var binding: ActivityWeatherBinding
     private lateinit var nowBinding: NowBinding
     private lateinit var forecastBinding: ForecastBinding
     private lateinit var lifeIndexBinding: LifeIndexBinding
@@ -50,6 +55,9 @@ class WeatherActivity : AppCompatActivity() {
         forecastBinding = ForecastBinding.bind(findViewById(R.id.forecastLayout))
         lifeIndexBinding = LifeIndexBinding.bind(findViewById(R.id.lifeIndexLayout))
 
+        /*
+        从Intent中取出经纬度坐标和地区名称，并赋值到WeatherViewModel的对应变量中
+         */
         if(viewModel.locationLng.isEmpty()){
             viewModel.locationLng = intent.getStringExtra("location_lng") ?: ""
         }
@@ -59,6 +67,10 @@ class WeatherActivity : AppCompatActivity() {
         if(viewModel.placeName.isEmpty()){
             viewModel.placeName = intent.getStringExtra("place_name") ?: ""
         }
+
+        /*
+        对weatherLiveData对象进行观察，当获取到服务器返回的天气数据时，调用 showWeatherInfo()方法进行解析与展示
+         */
         viewModel.weatherLiveData.observe(this, Observer { result ->
             val weather = result.getOrNull()
             if(weather != null){
@@ -67,10 +79,42 @@ class WeatherActivity : AppCompatActivity() {
                 Toast.makeText(this, "无法成功获取天气信息", Toast.LENGTH_SHORT).show()
                 result.exceptionOrNull()?.printStackTrace()
             }
+            //刷新事件结束，并隐藏进度条
+            binding.swipeRefresh.isRefreshing = false
         })
-        viewModel.refreshWeather(viewModel.locationLng, viewModel.locationLat)
+        binding.swipeRefresh.setColorSchemeResources(R.color.colorPrimary)
+        refreshWeather()
+        //下拉刷新监听器
+        binding.swipeRefresh.setOnRefreshListener {//触发下拉刷新时，调用refreshWeather来刷新天气信息。
+            refreshWeather()
+        }
+        //viewModel.refreshWeather(viewModel.locationLng, viewModel.locationLat)
+        nowBinding.navBtn.setOnClickListener {
+            //在切换城市按钮的点击事件中调用DrawerLayout的openDrawer()方法打开滑动菜单
+            binding.drawerLayout.openDrawer(GravityCompat.START)
+        }
+        /*
+        监听DrawerLayout状态，当滑动菜单被隐藏时同时隐藏输入法
+         */
+        binding.drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener{
+            override fun onDrawerStateChanged(newState: Int) {}
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
+            override fun onDrawerOpened(drawerView: View) {}
+            override fun onDrawerClosed(drawerView: View) {
+                val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                manager.hideSoftInputFromWindow(drawerView.windowToken,
+                    InputMethodManager.HIDE_NOT_ALWAYS)
+            }
+        })
     }
 
+    /*
+    刷新天气
+     */
+    fun refreshWeather(){
+        viewModel.refreshWeather(viewModel.locationLng, viewModel.locationLat)
+        binding.swipeRefresh.isRefreshing = true
+    }
     private fun showWeatherInfo(weather: Weather){
         nowBinding.placeName.text = viewModel.placeName
         val realtime = weather.realtime

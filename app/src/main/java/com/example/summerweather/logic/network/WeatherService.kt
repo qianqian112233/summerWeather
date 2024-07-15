@@ -12,7 +12,7 @@ import retrofit2.http.Path
  */
 interface WeatherService
 {
-    //获取实时天气
+    //获取实时天气，使用@GET注解声明API接口，使用@Path注解向请求接口中动态传入经纬度坐标
     @GET("v2.5/${SummerWeatherApplication.TOKEN}/{lng},{lat}/realtime.json")
     fun getRealtimeWeather(@Path("lng") lng: String, @Path("lat") lat: String): Call<RealtimeResponse>
 

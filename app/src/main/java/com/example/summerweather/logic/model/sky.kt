@@ -33,6 +33,7 @@ private val sky = mapOf(
     "DUST" to Sky("浮尘", R.drawable.ic_fog, R.drawable.bg_fog)
 )
 
+//根据天气代码获取对应的sky对象
 fun getSky(skycon: String): Sky {
     return sky[skycon] ?: sky["CLEAR_DAY"]!!
 }

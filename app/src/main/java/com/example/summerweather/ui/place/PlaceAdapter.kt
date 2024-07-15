@@ -21,6 +21,9 @@ class PlaceAdapter(private val fragment: PlaceFragment, private val placeList: L
             val placeAddress: TextView = view.findViewById(R.id.placeAddress)
         }
 
+    /*
+    从城市搜索界面跳转到天气界面
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.place_item, parent, false)
         //使得能从城市搜索界面跳转到天气界面
@@ -33,15 +36,23 @@ class PlaceAdapter(private val fragment: PlaceFragment, private val placeList: L
         holder.itemView.setOnClickListener {
             val position = holder.adapterPosition
             val place = placeList[position]
-            val intent = Intent(parent.context, WeatherActivity::class.java).apply{
-                putExtra("location_lng", place.location.lng)
-                putExtra("location_lat", place.location.lat)
-                putExtra("place_name", place.name)
+            val activity = fragment.activity
+            if(activity is WeatherActivity){//如果是在WeatherActivity中，关闭滑动菜单，复制新的经纬度坐标和地区名称，刷新城市天气
+                activity.binding.drawerLayout.closeDrawers()
+                activity.viewModel.locationLng = place.location.lng
+                activity.viewModel.locationLat = place.location.lat
+                activity.viewModel.placeName = place.name
+                activity.refreshWeather()
+            }else{
+                val intent = Intent(parent.context, WeatherActivity::class.java).apply{
+                    putExtra("location_lng", place.location.lng)
+                    putExtra("location_lat", place.location.lat)
+                    putExtra("place_name", place.name)
+                }
+                fragment.startActivity(intent)
+                activity?.finish()
             }
-            //当点击了任何子项布局时，在跳转到WeatherActivity之前，先调用PlaceViewModel的savePlace()方法来存储选中的城市。
             fragment.viewModel.savePlace(place)
-            fragment.startActivity(intent)
-            fragment.activity?.finish()
         }
         return holder
     }
