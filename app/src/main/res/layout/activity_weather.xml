@@ -51,7 +51,7 @@
         android:focusable="true"
         android:background="@color/colorPrimary">
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/placeFragment"
             android:name = "com.example.summerweather.ui.place.PlaceFragment"
             android:layout_width="match_parent"
