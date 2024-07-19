@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".ui.Demo.DemoActivity">
+
+    <Button
+        android:id="@+id/bind_service_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bind Service"/>
+    <Button
+        android:id="@+id/unbind_service_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Unbind Service"/>
+
+    <!--
+    <Button
+        android:id="@+id/start_service_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start Service"/>
+
+    <Button
+        android:id="@+id/stop_service_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Stop Service"/>
+    -->
+
+    <Button
+        android:id="@+id/query_content_provider_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Query Content Provider"/>
+
+    <Button
+        android:id="@+id/broadcast_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Send Broadcast"/>
+
+</LinearLayout>

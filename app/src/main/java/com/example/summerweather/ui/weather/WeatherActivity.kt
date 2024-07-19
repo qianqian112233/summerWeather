@@ -1,17 +1,22 @@
 package com.example.summerweather.ui.weather
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.provider.ContactsContract.CommonDataKinds.Im
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material3.ButtonElevation
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -26,6 +31,8 @@ import com.example.summerweather.databinding.LifeIndexBinding
 import com.example.summerweather.databinding.NowBinding
 import com.example.summerweather.logic.model.Weather
 import com.example.summerweather.logic.model.getSky
+import com.example.summerweather.ui.Demo.DemoActivity
+import com.example.summerweather.ui.book.BookListActivity
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -106,6 +113,18 @@ class WeatherActivity : AppCompatActivity() {
                     InputMethodManager.HIDE_NOT_ALWAYS)
             }
         })
+
+        val jumpBookButton: ImageButton = findViewById(R.id.jump_to_book_list)
+        jumpBookButton.setOnClickListener {
+            val intent = Intent(this, BookListActivity::class.java)
+            startActivity(intent)
+        }
+
+        val jumpToDemo : ImageButton = findViewById(R.id.jump_to_demo)
+        jumpToDemo.setOnClickListener {
+            val intent = Intent(this, DemoActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     /*

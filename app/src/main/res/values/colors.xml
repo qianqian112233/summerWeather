@@ -10,4 +10,13 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <!-- Define brownish gold color -->
+    <color name="brownish_gold">#A67B5B</color>
+    <!-- Define light brown background color -->
+    <color name="light_brown">#F5DEB3</color>
+    <!-- Define light green background color-->
+    <color name="light_green">#E0FFE0</color>
+    <!-- 较深的绿色（字体颜色） -->
+    <color name="font_deep_green">#006400</color>
+
 </resources>

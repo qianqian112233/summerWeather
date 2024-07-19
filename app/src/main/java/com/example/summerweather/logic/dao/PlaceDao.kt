@@ -34,6 +34,11 @@ object PlaceDao {
     //判断是否有数据被存储
     fun isPlacedSaved() = sharedPreferences().contains("place")
 
+/*
+获取一个名为summer_weather的SharedPreferences实例。
+Context.MODE_PRIVATE是一个模式，表示该SharedPreferences文件将被存储在私有存储中。
+只有应用程序本身可以访问这些数据，而不会暴露给其他应用。
+ */
     private fun sharedPreferences() = SummerWeatherApplication.context
         .getSharedPreferences("summer_weather", Context.MODE_PRIVATE)
 }

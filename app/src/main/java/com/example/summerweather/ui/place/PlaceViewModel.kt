@@ -47,23 +47,5 @@ class PlaceViewModel : ViewModel() {
 
     fun isPlaceSaved() = Repository.isPlaceSaved()
 
-//    private val _placeLiveData = MediatorLiveData<Result<List<Place>>>()
-//    val placeLiveData: LiveData<Result<List<Place>>> get() = _placeLiveData
-
-//    init {
-//        _placeLiveData.addSource(searchLiveData) { query ->
-//            query?.let {
-//                // 开始新的搜索请求
-//                val source = Repository.searchPlaces(it)
-//                // 清除以前的结果源以免内存泄漏
-//                _placeLiveData.removeSource(source)
-//
-//                // 添加新的结果源
-//                _placeLiveData.addSource(source) { result ->
-//                    _placeLiveData.value = result
-//                }
-//            }
-//        }
-//    }
 
 }

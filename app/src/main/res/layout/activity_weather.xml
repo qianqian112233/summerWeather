@@ -38,6 +38,28 @@
                     android:id="@+id/lifeIndexLayout"
                     layout="@layout/life_index"/>
 
+                <ImageButton
+                    android:id="@+id/jump_to_book_list"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:scaleType="fitEnd"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/white"
+                    android:src="@drawable/ic_book"/>
+
+                <ImageButton
+                    android:id="@+id/jump_to_demo"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:scaleType="fitEnd"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/white"
+                    android:src="@drawable/ic_demo"/>
+
             </LinearLayout>
 
         </ScrollView>

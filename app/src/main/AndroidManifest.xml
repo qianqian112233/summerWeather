@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:name=".SummerWeatherApplication"
         android:allowBackup="true"
@@ -15,6 +17,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.Demo.ContentProviderActivity"
+            android:exported="false" />
+
+        <service
+            android:name=".ui.Demo.MyService"
+            android:enabled="true"
+            android:exported="true"></service>
+        <!--
+        <provider
+            android:authorities=""
+            android:name=".ui.Demo.MyContentProvider"
+            android:exported="true">
+        </provider>
+        -->
+        <activity
+            android:name=".ui.Demo.DemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.book.BookListActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.weather.WeatherActivity"
             android:exported="false" />
