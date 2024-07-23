@@ -1,5 +1,8 @@
 package com.example.summerweather.logic.model
 
+import android.os.Parcelable
+import androidx.versionedparcelable.VersionedParcelize
+
 /*
 list
 book_cover
@@ -15,5 +18,5 @@ data class Book(
     val rating: String,
     val summary: String,
     val category: String,
-    val rank: String
+    val rank: String? = null
 )

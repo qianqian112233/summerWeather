@@ -9,4 +9,6 @@ import com.example.summerweather.logic.model.Book
 interface OnItemActionListener {
     fun onRankButtonClick(book: Book)
     fun onFeedbackButtonCLick(book: Book)
+
+    fun onBookItemClick(book: Book)
 }

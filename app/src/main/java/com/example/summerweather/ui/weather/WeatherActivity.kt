@@ -25,8 +25,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.summerweather.R
 import com.example.summerweather.databinding.ActivityWeatherBinding
-import com.example.summerweather.databinding.ForecastBinding
-import com.example.summerweather.databinding.ForecastItemBinding
 import com.example.summerweather.databinding.LifeIndexBinding
 import com.example.summerweather.databinding.NowBinding
 import com.example.summerweather.logic.model.Weather
@@ -39,8 +37,8 @@ import java.util.Locale
 class WeatherActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityWeatherBinding
+    lateinit var forecastView: ForecastView
     private lateinit var nowBinding: NowBinding
-    private lateinit var forecastBinding: ForecastBinding
     private lateinit var lifeIndexBinding: LifeIndexBinding
 
     val viewModel by lazy { ViewModelProvider(this).get(WeatherViewModel::class.java) }
@@ -57,10 +55,13 @@ class WeatherActivity : AppCompatActivity() {
 
         //setContentView(R.layout.activity_weather)
         setContentView(binding.root)
+
         //初始化bindings
         nowBinding = NowBinding.bind(findViewById(R.id.nowLayout))
-        forecastBinding = ForecastBinding.bind(findViewById(R.id.forecastLayout))
         lifeIndexBinding = LifeIndexBinding.bind(findViewById(R.id.lifeIndexLayout))
+
+        // 初始化ForecastView
+        forecastView = findViewById(R.id.forecastView)
 
         /*
         从Intent中取出经纬度坐标和地区名称，并赋值到WeatherViewModel的对应变量中
@@ -146,27 +147,8 @@ class WeatherActivity : AppCompatActivity() {
         nowBinding.currentAQI.text = currentPM25Text
         nowBinding.nowLayout.setBackgroundResource(getSky(realtime.skycon).bg)
 
-        //填充forecast.xml布局中的数据
-        forecastBinding.forecastLayout.removeAllViews()
-        val days = future.skycon.size
-        for(i in 0 until days){
-            val skycon = future.skycon[i]
-            val temperature = future.temperature[i]
-            val view = LayoutInflater.from(this).inflate(R.layout.forecast_item,
-                forecastBinding.forecastLayout, false)
-            val dateInfo = view.findViewById(R.id.dateInfo) as TextView
-            val skyIcon = view.findViewById(R.id.skyIcon) as ImageView
-            val skyInfo = view.findViewById(R.id.skyInfo) as TextView
-            val temperatureInfo = view.findViewById(R.id.temperatureInfo) as TextView
-            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            dateInfo.text = simpleDateFormat.format(skycon.date)
-            val sky = getSky(skycon.value)
-            skyIcon.setImageResource(sky.icon)
-            skyInfo.text = sky.info
-            val tempText = "${temperature.min.toInt()} ~ ${temperature.max.toInt()} °C"
-            temperatureInfo.text = tempText
-            forecastBinding.forecastLayout.addView(view)
-        }
+        //填充now布局中的数据
+        forecastView.setweatherInfo(weather)
 
         //填充life_index.xml布局
         val lifeIndex = future.lifeIndex

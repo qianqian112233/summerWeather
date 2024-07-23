@@ -1,10 +1,12 @@
 package com.example.summerweather.ui.book
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -32,10 +34,6 @@ class BookListActivity : AppCompatActivity(), OnItemActionListener {
 
     }
 
-    private fun onBookItemClicked(book : Book){
-
-    }
-
     //从assets文件中加载Book信息
     private fun loadBooksFromAssets() : List<Book>{
         //获取assetManager实例，用于访问应用的assets、目录
@@ -54,10 +52,27 @@ class BookListActivity : AppCompatActivity(), OnItemActionListener {
     }
 
     override fun onRankButtonClick(book: Book) {
-        Toast.makeText(this, "这里跳转到当前展示的排行榜", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "这里跳转到当前展示的排行榜", Toast.LENGTH_SHORT).show()
     }
 
     override fun onFeedbackButtonCLick(book: Book) {
-        Toast.makeText(this, "这里弹出反馈界面", Toast.LENGTH_LONG).show()
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("负反馈选项")
+        builder.setItems(arrayOf("不感兴趣", "不喜欢该题材")) { dialog, which ->
+            //用选择的选项
+            when(which){
+                0 -> Toast.makeText(this, "您选择了：不感兴趣", Toast.LENGTH_SHORT).show()
+                1 -> Toast.makeText(this, "您选择了：不喜欢该题材", Toast.LENGTH_SHORT).show()
+            }
+        }
+        builder.setNegativeButton("取消", null)
+        builder.show()
+    }
+
+    override fun onBookItemClick(book: Book) {
+//        val intent = Intent(this, BookDetailActivity::class.java)
+//        intent.putExtra("Book", book)
+//        startActivity(intent)
+        Toast.makeText(this, "这里跳转到详细书籍界面", Toast.LENGTH_SHORT).show()
     }
 }
